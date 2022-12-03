@@ -165,6 +165,7 @@ while run:
                     board.placeCircle(pos)
                     board.drawPlayerMark(1)
                 player = 2 if player == 1 else 1
+                # ! Ici on peut afficher la couleur du joueur soit avec les petits carrés soit avec toute la grille colorée
 
     for event in event_list:
         if event.type == pg.QUIT:
