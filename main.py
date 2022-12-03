@@ -143,12 +143,12 @@ class Board:
 
 
 board = Board()
-
 window = pg.display.set_mode((600, 600))
 board.drawGrid((255, 255, 255))
 run = True
 player = 1
 board.drawPlayerMark(1)
+
 while run:
     leftClick = False
 
