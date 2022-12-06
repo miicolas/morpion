@@ -11,60 +11,68 @@ class Board:
             [0, 0, 0],
         ]  # 0 = Empty, 1 = Cross, 2 = Circle
 
+    def isSlotEmpty(self, row, col):
+        if self.slots[row][col] == 0:
+            return True
+        return False
+
+    def updateSlot(self, row, col, player):
+        self.slots[row][col] = player
+
     def placeCross(self, pos):
         self.color = (255, 0, 0)
         if 304 < pos[0] < 496:
             if pos[1] < 196:
-                if self.slots[0][0] == 0:
+                if self.isSlotEmpty(0, 0):
                     pg.draw.line(window, self.color, (345, 45), (455, 155), 12)
                     pg.draw.line(window, self.color, (345, 155), (455, 45), 12)
-                    self.slots[0][0] = 1
+                    self.updateSlot(0, 0, 1)
             if 204 < pos[1] < 396:
-                if self.slots[1][0] == 0:
+                if self.isSlotEmpty(1, 0):
                     pg.draw.line(window, self.color, (345, 245), (455, 355), 12)
                     pg.draw.line(window, self.color, (345, 355), (455, 245), 12)
-                    self.slots[1][0] = 1
+                    self.updateSlot(1, 0, 1)
             if 404 < pos[1]:
-                if self.slots[2][0] == 0:
+                if self.isSlotEmpty(2, 0):
                     pg.draw.line(window, self.color, (345, 445), (455, 555), 12)
                     pg.draw.line(window, self.color, (345, 555), (455, 445), 12)
-                    self.slots[2][0] = 1
+                    self.updateSlot(2, 0, 1)
             else:
                 pass
         elif 504 < pos[0] < 696:
             if pos[1] < 196:
-                if self.slots[0][1] == 0:
+                if self.isSlotEmpty(0, 1):
                     pg.draw.line(window, self.color, (545, 45), (655, 155), 12)
                     pg.draw.line(window, self.color, (545, 155), (655, 45), 12)
-                    self.slots[0][1] = 1
+                    self.updateSlot(0, 1, 1)
             if 204 < pos[1] < 396:
-                if self.slots[1][1] == 0:
+                if self.isSlotEmpty(1, 1):
                     pg.draw.line(window, self.color, (545, 245), (655, 355), 12)
                     pg.draw.line(window, self.color, (545, 355), (655, 245), 12)
-                    self.slots[1][1] = 1
+                    self.updateSlot(1, 1, 1)
             if 404 < pos[1]:
-                if self.slots[2][1] == 0:
+                if self.isSlotEmpty(2, 1):
                     pg.draw.line(window, self.color, (545, 445), (655, 555), 12)
                     pg.draw.line(window, self.color, (545, 555), (655, 445), 12)
-                    self.slots[2][1] = 1
+                    self.updateSlot(2, 1, 1)
             else:
                 pass
         elif 704 < pos[0] < 896:
             if pos[1] < 196:
-                if self.slots[0][2] == 0:
+                if self.isSlotEmpty(0, 2):
                     pg.draw.line(window, self.color, (745, 45), (855, 155), 12)
                     pg.draw.line(window, self.color, (745, 155), (855, 45), 12)
-                    self.slots[0][2] = 1
+                    self.updateSlot(0, 2, 1)
             if 204 < pos[1] < 396:
-                if self.slots[1][2] == 0:
+                if self.isSlotEmpty(1, 2):
                     pg.draw.line(window, self.color, (745, 245), (855, 355), 12)
                     pg.draw.line(window, self.color, (745, 355), (855, 245), 12)
-                    self.slots[1][2] = 1
+                    self.updateSlot(1, 2, 1)
             if 404 < pos[1]:
-                if self.slots[2][2] == 0:
+                if self.isSlotEmpty(2, 2):
                     pg.draw.line(window, self.color, (745, 445), (855, 555), 12)
                     pg.draw.line(window, self.color, (745, 555), (855, 445), 12)
-                    self.slots[2][2] = 1
+                    self.updateSlot(2, 2, 1)
             else:
                 pass
         else:
@@ -73,47 +81,47 @@ class Board:
     def placeCircle(self, pos):
         if 304 < pos[0] < 496:
             if pos[1] < 196:
-                if self.slots[0][0] == 0:
+                if self.isSlotEmpty(0, 0):
                     pg.draw.circle(window, (0, 255, 0), (400, 100), 60, 8)
-                    self.slots[0][0] = 2
+                    self.updateSlot(0, 0, 2)
             if 204 < pos[1] < 396:
-                if self.slots[1][0] == 0:
+                if self.isSlotEmpty(1, 0):
                     pg.draw.circle(window, (0, 255, 0), (400, 300), 60, 8)
-                    self.slots[1][0] = 2
+                    self.updateSlot(1, 0, 2)
             if 404 < pos[1]:
-                if self.slots[2][0] == 0:
+                if self.isSlotEmpty(2, 0):
                     pg.draw.circle(window, (0, 255, 0), (400, 500), 60, 8)
-                    self.slots[2][0] = 2
+                    self.updateSlot(2, 0, 2)
             else:
                 pass
         elif 504 < pos[0] < 696:
             if pos[1] < 196:
-                if self.slots[0][1] == 0:
+                if self.isSlotEmpty(0, 1):
                     pg.draw.circle(window, (0, 255, 0), (600, 100), 60, 8)
-                    self.slots[0][1] = 2
+                    self.updateSlot(0, 1, 2)
             if 204 < pos[1] < 396:
-                if self.slots[1][1] == 0:
+                if self.isSlotEmpty(1, 1):
                     pg.draw.circle(window, (0, 255, 0), (600, 300), 60, 8)
-                    self.slots[1][1] = 2
+                    self.updateSlot(1, 1, 2)
             if 404 < pos[1]:
-                if self.slots[2][1] == 0:
+                if self.isSlotEmpty(2, 1):
                     pg.draw.circle(window, (0, 255, 0), (600, 500), 60, 8)
-                    self.slots[2][1] = 2
+                    self.updateSlot(2, 1, 2)
             else:
                 pass
         elif 704 < pos[0] < 896:
             if pos[1] < 196:
-                if self.slots[0][2] == 0:
+                if self.isSlotEmpty(0, 2):
                     pg.draw.circle(window, (0, 255, 0), (800, 100), 60, 8)
-                    self.slots[0][2] = 2
+                    self.updateSlot(0, 2, 2)
             if 204 < pos[1] < 396:
-                if self.slots[1][2] == 0:
+                if self.isSlotEmpty(1, 2):
                     pg.draw.circle(window, (0, 255, 0), (800, 300), 60, 8)
-                    self.slots[1][2] = 2
+                    self.updateSlot(1, 2, 2)
             if 404 < pos[1]:
-                if self.slots[2][2] == 0:
+                if self.isSlotEmpty(2, 2):
                     pg.draw.circle(window, (0, 255, 0), (800, 500), 60, 8)
-                    self.slots[2][2] = 2
+                    self.updateSlot(2, 2, 2)
             else:
                 pass
         else:
