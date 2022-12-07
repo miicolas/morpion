@@ -1,4 +1,5 @@
 import pygame as pg
+import random
 
 
 class Board:
@@ -158,7 +159,7 @@ board = Board()
 window = pg.display.set_mode((1200, 600))
 board.drawGrid((255, 255, 255))
 run = True
-player = 1
+player = random.randint(1,2)
 board.drawPlayerMark(1)
 
 while run:
