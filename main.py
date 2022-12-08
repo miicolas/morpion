@@ -155,32 +155,33 @@ class Board:
         pg.display.flip()
 
 
-board = Board()
-window = pg.display.set_mode((1200, 600))
-board.drawGrid((255, 255, 255))
-run = True
-player = random.randint(1,2)
-board.drawPlayerMark(1)
+def main():
+    board = Board()
+    window = pg.display.set_mode((1200, 600))
+    board.drawGrid((255, 255, 255))
+    run = True
+    player = random.randint(1,2)
+    board.drawPlayerMark(1)
 
-while run:
-    leftClick = False
+    while run:
+        leftClick = False
 
-    event_list = pg.event.get()
-    for event in event_list:
-        if event.type == pg.MOUSEBUTTONDOWN:
-            if event.button == 1:
-                pos = pg.mouse.get_pos()
-                if player == 1:
-                    board.placeCross(pos)
-                    board.drawPlayerMark(2)
-                else:
-                    board.placeCircle(pos)
-                    board.drawPlayerMark(1)
-                player = 2 if player == 1 else 1
-                # ! Ici on peut afficher la couleur du joueur soit avec les petits carrés soit avec toute la grille colorée
+        event_list = pg.event.get()
+        for event in event_list:
+            if event.type == pg.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    pos = pg.mouse.get_pos()
+                    if player == 1:
+                        board.placeCross(pos)
+                        board.drawPlayerMark(2)
+                    else:
+                        board.placeCircle(pos)
+                        board.drawPlayerMark(1)
+                    player = 2 if player == 1 else 1
+                    # ! Ici on peut afficher la couleur du joueur soit avec les petits carrés soit avec toute la grille colorée
 
-    for event in event_list:
-        if event.type == pg.QUIT:
-            pg.quit()
-            running = False
-    pg.display.flip()
+        for event in event_list:
+            if event.type == pg.QUIT:
+                pg.quit()
+                running = False
+        pg.display.flip()
