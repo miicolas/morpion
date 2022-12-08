@@ -154,6 +154,31 @@ class Board:
         )
         pg.display.flip()
 
+    def win_player(self,player):
+        win=False
+        for i in range(3): 
+            if self.isSlotEmpty(0, 0) = self.isSlotEmpty(1, 0) = self.isSlotEmpty(2, 0) = player:
+                win=True 
+            else: 
+                win=False
+                pass
+            elif self.isSlotEmpty(0, 1) = self.isSlotEmpty(1, 1) = self.isSlotEmpty(2, 1) = player:
+                win=True 
+            else: 
+                win=False
+                pass
+             elif self.isSlotEmpty(0, 2) = self.isSlotEmpty(1, 2) = self.isSlotEmpty(2, 2) = player:
+                win=True 
+            else: 
+                win=False
+                pass
+        pass
+
+
+
+
+
+
 
 def main():
     board = Board()
