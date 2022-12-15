@@ -1,3 +1,7 @@
+from os import environ
+
+environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
+
 import pygame as pg
 
 
@@ -11,6 +15,7 @@ class Board:
             [0, 0, 0],  # (1, 0), (1, 1), (1, 2)
             [0, 0, 0],  # (2, 0), (2, 1), (2, 2)
         ]  # 0 = Empty, 1 = Cross, 2 = Circle
+        self.gameEnded = False
 
     def isSlotEmpty(self, row, col):
         if self.slots[row][col] == 0:
@@ -34,8 +39,13 @@ class Board:
         return self.player
 
     def hasPlayerWon(self, pos):
-        if self.isRowComplete(pos[0]) or self.isColComplete(pos[1]):
+        if (
+            self.isRowComplete(pos[0])
+            or self.isColComplete(pos[1])
+            or self.isDiagComplete(pos)
+        ):
             return True
+            self.gameEnded = True
 
     def isRowComplete(self, row):
         if min(self.slots[row]) == max(self.slots[row]):
@@ -46,6 +56,18 @@ class Board:
         col = [self.slots[0][col], self.slots[1][col], self.slots[2][col]]
         if min(col) == max(col):
             return True
+        return False
+
+    def isDiagComplete(self, pos):
+        print(pos)
+        self.diag1 = [self.slots[0][0], self.slots[1][1], self.slots[2][2]]
+        self.diag2 = [self.slots[2][0], self.slots[1][1], self.slots[0][2]]
+        if self.slots[pos[0]][pos[1]] in self.diag1:
+            if min(self.diag1) == max(self.diag1):
+                return True
+        elif self.slots[pos[0]][pos[1]] in self.diag2:
+            if min(self.diag2) == max(self.diag2):
+                return True
         return False
 
     def placeCross(self, pos):
@@ -117,17 +139,18 @@ while run:
     for event in event_list:
         if event.type == pg.MOUSEBUTTONDOWN:
             if event.button == 1:
-                pos = board.getClickedCase(pg.mouse.get_pos())
-                if board.getPlayer() == 1 and pos:
-                    board.placeCross(pos)
-                    if board.hasPlayerWon(pos):
-                        print("Cross Wins")
-                elif board.getPlayer() == 2 and pos:
-                    board.placeCircle(pos)
-                    if board.hasPlayerWon(pos):
-                        print("Circle Wins")
-                else:
-                    pass
+                if not board.gameEnded:
+                    pos = board.getClickedCase(pg.mouse.get_pos())
+                    if board.getPlayer() == 1 and pos:
+                        board.placeCross(pos)
+                        if board.hasPlayerWon(pos):
+                            print("Cross Wins")
+                    elif board.getPlayer() == 2 and pos:
+                        board.placeCircle(pos)
+                        if board.hasPlayerWon(pos):
+                            print("Circle Wins")
+                    else:
+                        pass
 
     for event in event_list:
         if event.type == pg.QUIT:
