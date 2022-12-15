@@ -9,6 +9,7 @@ class Board:
     """Game board"""
 
     def __init__(self) -> None:
+        # Initialization of slots that serve as a box for the game with their coordinates
         self.player = 1  # 1 = Cross, 2 = Circle
         self.slots = [
             [0, 0, 0],  # (0, 0), (0, 1), (0, 2)
@@ -26,6 +27,7 @@ class Board:
         self.slots[row][col] = player
 
     def getClickedCase(self, pos):
+        # When clicking on one of the boxes, we seek the horizontal and vertical coordinates of the corresponding box
         row = pos[1] // 200
         col = (pos[0] - 300) // 200
         if 0 <= row <= 2 and 0 <= col <= 2:
@@ -48,11 +50,13 @@ class Board:
             self.gameEnded = True
 
     def isRowComplete(self, row):
+        # The line is complete when box 0, 1, 2 in x are filled
         if min(self.slots[row]) == max(self.slots[row]):
             return True
         return False
 
     def isColComplete(self, col):
+        # The column is complete when the box 0, 1, 2 in it are filled
         col = [self.slots[0][col], self.slots[1][col], self.slots[2][col]]
         if min(col) == max(col):
             return True
@@ -71,6 +75,7 @@ class Board:
         return False
 
     def placeCross(self, pos):
+        # Placement of the cross with coordinates in pixels and position in x and y
         self.color = (255, 0, 0)
         if self.isSlotEmpty(pos[0], pos[1]):
             pg.draw.line(
@@ -92,6 +97,7 @@ class Board:
             self.drawPlayerMark(self.getPlayer())
 
     def placeCircle(self, pos):
+        # Placement of the circle with coordinates in pixels and position in x and y
         self.color = (0, 255, 0)
         if self.isSlotEmpty(pos[0], pos[1]):
             pg.draw.circle(
@@ -102,6 +108,7 @@ class Board:
             self.drawPlayerMark(self.getPlayer())
 
     def drawGrid(self, color):
+        # drawing the grid for game
         pg.draw.rect(window, color, pg.Rect(300, -4, 600, 8))
         pg.draw.rect(window, color, pg.Rect(300, 196, 600, 8))
         pg.draw.rect(window, color, pg.Rect(300, 396, 600, 8))
