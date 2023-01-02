@@ -29,7 +29,7 @@ class Board:
     def getClickedCase(self, pos):
         # When clicking on one of the boxes, we seek the horizontal and vertical coordinates of the corresponding box
         row = pos[1] // 200
-        col = (pos[0] - 300) // 200
+        col = pos[0] // 200
         if 0 <= row <= 2 and 0 <= col <= 2:
             return (row, col)
         return False
@@ -46,8 +46,8 @@ class Board:
             or self.isColComplete(pos[1])
             or self.isDiagComplete(pos)
         ):
-            return True
             self.gameEnded = True
+            return True
 
     def isRowComplete(self, row):
         # The line is complete when box 0, 1, 2 in x are filled
@@ -55,8 +55,8 @@ class Board:
             pg.draw.line(
                 window,
                 (255, 255, 255),
-                (330, 100 + 200 * row),
-                (870, 100 + 200 * row),
+                (30, 100 + 200 * row),
+                (570, 100 + 200 * row),
                 8,
             )
             return True
@@ -69,8 +69,8 @@ class Board:
             pg.draw.line(
                 window,
                 (255, 255, 255),
-                (400 + 200 * col, 30),
-                (400 + 200 * col, 570),
+                (100 + 200 * col, 30),
+                (100 + 200 * col, 570),
                 8,
             )
             return True
@@ -82,12 +82,12 @@ class Board:
         self.diag2 = [self.slots[2][0], self.slots[1][1], self.slots[0][2]]
         if (pos[0], pos[1]) in [(0, 0), (1, 1), (2, 2)]:
             if min(self.diag1) == max(self.diag1):
-                pg.draw.line(window, (255, 255, 255), (330, 30), (870, 570), 12)
+                pg.draw.line(window, (255, 255, 255), (30, 30), (570, 570), 12)
                 return True
         elif (pos[0], pos[1]) in [(2, 0), (1, 1), (0, 2)]:
             print("diag2", self.diag2)
             if min(self.diag2) == max(self.diag2):
-                pg.draw.line(window, (255, 255, 255), (330, 570), (870, 30), 12)
+                pg.draw.line(window, (255, 255, 255), (30, 570), (570, 30), 12)
                 return True
         return False
 
@@ -98,15 +98,15 @@ class Board:
             pg.draw.line(
                 window,
                 self.color,
-                (345 + 200 * pos[1], 45 + 200 * pos[0]),
-                (455 + 200 * pos[1], 155 + 200 * pos[0]),
+                (45 + 200 * pos[1], 45 + 200 * pos[0]),
+                (155 + 200 * pos[1], 155 + 200 * pos[0]),
                 12,
             )
             pg.draw.line(
                 window,
                 self.color,
-                (345 + 200 * pos[1], 155 + 200 * pos[0]),
-                (455 + 200 * pos[1], 45 + 200 * pos[0]),
+                (45 + 200 * pos[1], 155 + 200 * pos[0]),
+                (155 + 200 * pos[1], 45 + 200 * pos[0]),
                 12,
             )
             self.updateSlot(pos[0], pos[1], self.player)
@@ -118,7 +118,7 @@ class Board:
         self.color = (0, 255, 0)
         if self.isSlotEmpty(pos[0], pos[1]):
             pg.draw.circle(
-                window, (0, 255, 0), (400 + 200 * pos[1], 100 + 200 * pos[0]), 60, 8
+                window, (0, 255, 0), (100 + 200 * pos[1], 100 + 200 * pos[0]), 60, 8
             )
             self.updateSlot(pos[0], pos[1], self.player)
             self.setPlayer(1)
@@ -126,28 +126,28 @@ class Board:
 
     def drawGrid(self, color):
         # drawing the grid for game
-        pg.draw.rect(window, color, pg.Rect(300, -4, 600, 8))
-        pg.draw.rect(window, color, pg.Rect(300, 196, 600, 8))
-        pg.draw.rect(window, color, pg.Rect(300, 396, 600, 8))
-        pg.draw.rect(window, color, pg.Rect(300, 596, 600, 8))
-        pg.draw.rect(window, color, pg.Rect(296, 0, 8, 600))
-        pg.draw.rect(window, color, pg.Rect(496, 0, 8, 600))
-        pg.draw.rect(window, color, pg.Rect(696, 0, 8, 600))
-        pg.draw.rect(window, color, pg.Rect(896, 0, 8, 600))
+        pg.draw.rect(window, color, pg.Rect(0, -4, 600, 8))
+        pg.draw.rect(window, color, pg.Rect(0, 196, 600, 8))
+        pg.draw.rect(window, color, pg.Rect(0, 396, 600, 8))
+        pg.draw.rect(window, color, pg.Rect(0, 596, 600, 8))
+        pg.draw.rect(window, color, pg.Rect(-1, 0, 8, 600))
+        pg.draw.rect(window, color, pg.Rect(196, 0, 8, 600))
+        pg.draw.rect(window, color, pg.Rect(396, 0, 8, 600))
+        pg.draw.rect(window, color, pg.Rect(596, 0, 8, 600))
         pg.display.flip()
 
     def drawPlayerMark(self, player):
         pg.draw.rect(
-            window, (255, 0, 0) if player == 1 else (0, 255, 0), pg.Rect(496, 196, 8, 8)
+            window, (255, 0, 0) if player == 1 else (0, 255, 0), pg.Rect(196, 196, 8, 8)
         )
         pg.draw.rect(
-            window, (255, 0, 0) if player == 1 else (0, 255, 0), pg.Rect(696, 196, 8, 8)
+            window, (255, 0, 0) if player == 1 else (0, 255, 0), pg.Rect(396, 196, 8, 8)
         )
         pg.draw.rect(
-            window, (255, 0, 0) if player == 1 else (0, 255, 0), pg.Rect(496, 396, 8, 8)
+            window, (255, 0, 0) if player == 1 else (0, 255, 0), pg.Rect(196, 396, 8, 8)
         )
         pg.draw.rect(
-            window, (255, 0, 0) if player == 1 else (0, 255, 0), pg.Rect(696, 396, 8, 8)
+            window, (255, 0, 0) if player == 1 else (0, 255, 0), pg.Rect(396, 396, 8, 8)
         )
         pg.display.flip()
 
@@ -161,7 +161,7 @@ class Board:
 
 
 board = Board()
-window = pg.display.set_mode((1200, 600))
+window = pg.display.set_mode((600, 600))
 board.drawGrid((255, 255, 255))
 run = True
 board.drawPlayerMark(board.player)
