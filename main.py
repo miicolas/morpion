@@ -52,13 +52,27 @@ class Board:
     def isRowComplete(self, row):
         # The line is complete when box 0, 1, 2 in x are filled
         if min(self.slots[row]) == max(self.slots[row]):
+            pg.draw.line(
+                window,
+                (255, 255, 255),
+                (330, 100 + 200 * row),
+                (870, 100 + 200 * row),
+                8,
+            )
             return True
         return False
 
     def isColComplete(self, col):
         # The column is complete when the box 0, 1, 2 in it are filled
-        col = [self.slots[0][col], self.slots[1][col], self.slots[2][col]]
-        if min(col) == max(col):
+        colList = [self.slots[0][col], self.slots[1][col], self.slots[2][col]]
+        if min(colList) == max(colList):
+            pg.draw.line(
+                window,
+                (255, 255, 255),
+                (400 + 200 * col, 30),
+                (400 + 200 * col, 570),
+                8,
+            )
             return True
         return False
 
@@ -66,11 +80,14 @@ class Board:
         print(pos)
         self.diag1 = [self.slots[0][0], self.slots[1][1], self.slots[2][2]]
         self.diag2 = [self.slots[2][0], self.slots[1][1], self.slots[0][2]]
-        if self.slots[pos[0]][pos[1]] in self.diag1:
+        if (pos[0], pos[1]) in [(0, 0), (1, 1), (2, 2)]:
             if min(self.diag1) == max(self.diag1):
+                pg.draw.line(window, (255, 255, 255), (330, 30), (870, 570), 12)
                 return True
-        elif self.slots[pos[0]][pos[1]] in self.diag2:
+        elif (pos[0], pos[1]) in [(2, 0), (1, 1), (0, 2)]:
+            print("diag2", self.diag2)
             if min(self.diag2) == max(self.diag2):
+                pg.draw.line(window, (255, 255, 255), (330, 570), (870, 30), 12)
                 return True
         return False
 
@@ -134,6 +151,14 @@ class Board:
         )
         pg.display.flip()
 
+    def handleWin(self, player):
+        color = (255, 0, 0) if player == 1 else (0, 255, 0)
+        for i in range(5):
+            self.drawGrid(color)
+            pg.time.wait(200)
+            self.drawGrid((255, 255, 255))
+            pg.time.wait(200)
+
 
 board = Board()
 window = pg.display.set_mode((1200, 600))
@@ -152,10 +177,12 @@ while run:
                         board.placeCross(pos)
                         if board.hasPlayerWon(pos):
                             print("Cross Wins")
+                            board.handleWin(1)
                     elif board.getPlayer() == 2 and pos:
                         board.placeCircle(pos)
                         if board.hasPlayerWon(pos):
                             print("Circle Wins")
+                            board.handleWin(2)
                     else:
                         pass
 
