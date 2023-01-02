@@ -216,6 +216,7 @@ while run:
                         [0, 0, 0],
                         [0, 0, 0],
                     ]
+                    board.drawPlayerMark(board.getPlayer())
 
     for event in event_list:
         if event.type == pg.QUIT:
