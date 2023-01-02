@@ -158,10 +158,30 @@ class Board:
             pg.time.wait(200)
             self.drawGrid((255, 255, 255))
             pg.time.wait(200)
+        pg.draw.rect(window, (0, 0, 0), pg.Rect(0, 0, 600, 600))
+        if player == 1:
+            winText = font.render("Cross Wins !", True, (255, 0, 0))
+            window.blit(winText, (40, 80))
+            winText = font.render("Press Return", True, (255, 0, 0))
+            window.blit(winText, (40, 240))
+            winText = font.render("to play again", True, (255, 0, 0))
+            window.blit(winText, (45, 320))
+            pg.display.flip()
+        elif player == 2:
+            winText = font.render("Circle Wins !", True, (0, 255, 0))
+            window.blit(winText, (40, 80))
+            winText = font.render("Press Return", True, (0, 255, 0))
+            window.blit(winText, (40, 240))
+            winText = font.render("to play again", True, (0, 255, 0))
+            window.blit(winText, (45, 320))
+            pg.display.flip()
 
 
 board = Board()
+pg.init()
+font = pg.font.Font(None, 120)
 window = pg.display.set_mode((600, 600))
+pg.display.set_caption("Tic Tac Toe")
 board.drawGrid((255, 255, 255))
 run = True
 board.drawPlayerMark(board.player)
@@ -169,9 +189,9 @@ board.drawPlayerMark(board.player)
 while run:
     event_list = pg.event.get()
     for event in event_list:
-        if event.type == pg.MOUSEBUTTONDOWN:
-            if event.button == 1:
-                if not board.gameEnded:
+        if not board.gameEnded:
+            if event.type == pg.MOUSEBUTTONDOWN:
+                if event.button == 1:
                     pos = board.getClickedCase(pg.mouse.get_pos())
                     if board.getPlayer() == 1 and pos:
                         board.placeCross(pos)
@@ -185,6 +205,17 @@ while run:
                             board.handleWin(2)
                     else:
                         pass
+        else:
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_RETURN:
+                    board.gameEnded = False
+                    pg.draw.rect(window, (0, 0, 0), pg.Rect(0, 0, 600, 600))
+                    board.drawGrid((255, 255, 255))
+                    board.slots = [
+                        [0, 0, 0],
+                        [0, 0, 0],
+                        [0, 0, 0],
+                    ]
 
     for event in event_list:
         if event.type == pg.QUIT:
