@@ -101,6 +101,14 @@ class Board:
                 return True
         return False
 
+    def isBoardComplete(self):
+        for line in self.slots:
+            for element in line:
+                if element == 0:
+                    return False
+        self.gameEnded = True
+        return True
+
     def placeCross(self, pos):
         # Placement of the cross with coordinates in pixels and position in x and y
         self.color = (255, 0, 0)
@@ -186,6 +194,16 @@ class Board:
             window.blit(winText, (45, 320))
             pg.display.flip()
 
+    def handleDraw(self):
+        pg.draw.rect(window, (0, 0, 0), pg.Rect(0, 0, 600, 600))
+        winText = font.render("It's a draw !", True, (255, 255, 0))
+        window.blit(winText, (40, 80))
+        winText = font.render("Press Return", True, (255, 255, 0))
+        window.blit(winText, (40, 240))
+        winText = font.render("to play again", True, (255, 255, 0))
+        window.blit(winText, (45, 320))
+        pg.display.flip()
+
 
 board = Board()
 pg.init()
@@ -208,11 +226,15 @@ while run:
                         if board.hasPlayerWon(pos):
                             print("Cross Wins")
                             board.handleWin(1)
+                        elif board.isBoardComplete():
+                            board.handleDraw()
                     elif board.getPlayer() == 2 and pos:
                         board.placeCircle(pos)
                         if board.hasPlayerWon(pos):
                             print("Circle Wins")
                             board.handleWin(2)
+                        elif board.isBoardComplete():
+                            board.handleDraw()
                     else:
                         pass
         else:
