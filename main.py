@@ -79,7 +79,6 @@ class Board:
 
     def isDiagComplete(self, pos):
         # Check if one of the diagonal is completed
-        print(pos)
         self.diag1 = [
             self.slots[0][0],
             self.slots[1][1],
@@ -95,7 +94,6 @@ class Board:
                 pg.draw.line(window, (255, 255, 255), (30, 30), (570, 570), 12)
                 return True
         elif (pos[0], pos[1]) in [(2, 0), (1, 1), (0, 2)]:
-            print("diag2", self.diag2)
             if min(self.diag2) == max(self.diag2):
                 pg.draw.line(window, (255, 255, 255), (30, 570), (570, 30), 12)
                 return True
@@ -195,9 +193,10 @@ class Board:
             pg.display.flip()
 
     def handleDraw(self):
+        print("Draw")
         pg.draw.rect(window, (0, 0, 0), pg.Rect(0, 0, 600, 600))
         winText = font.render("It's a draw !", True, (255, 255, 0))
-        window.blit(winText, (40, 80))
+        window.blit(winText, (80, 80))
         winText = font.render("Press Return", True, (255, 255, 0))
         window.blit(winText, (40, 240))
         winText = font.render("to play again", True, (255, 255, 0))
