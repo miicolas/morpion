@@ -41,13 +41,13 @@ class Board:
         return self.player
 
     def hasPlayerWon(self, pos):
-        #The player wins when a column or a row or a diagonal is completed
+        # The player wins when a column or a row or a diagonal is completed
         if (
             self.isRowComplete(pos[0])
             or self.isColComplete(pos[1])
             or self.isDiagComplete(pos)
         ):
-            self.gameEnded = True #The variable determines if the game is over
+            self.gameEnded = True  # The variable determines if the game is over
             return True
 
     def isRowComplete(self, row):
@@ -78,10 +78,18 @@ class Board:
         return False
 
     def isDiagComplete(self, pos):
-        #Check if one of the diagonal is completed 
+        # Check if one of the diagonal is completed
         print(pos)
-        self.diag1 = [self.slots[0][0], self.slots[1][1], self.slots[2][2]]#Determine the coordinates of diagonal 1 
-        self.diag2 = [self.slots[2][0], self.slots[1][1], self.slots[0][2]]#Determine the coordinates of diagonal 2
+        self.diag1 = [
+            self.slots[0][0],
+            self.slots[1][1],
+            self.slots[2][2],
+        ]  # Determine the coordinates of diagonal 1
+        self.diag2 = [
+            self.slots[2][0],
+            self.slots[1][1],
+            self.slots[0][2],
+        ]  # Determine the coordinates of diagonal 2
         if (pos[0], pos[1]) in [(0, 0), (1, 1), (2, 2)]:
             if min(self.diag1) == max(self.diag1):
                 pg.draw.line(window, (255, 255, 255), (30, 30), (570, 570), 12)
@@ -111,8 +119,8 @@ class Board:
                 (155 + 200 * pos[1], 45 + 200 * pos[0]),
                 12,
             )
-            self.updateSlot(pos[0], pos[1], self.player) 
-            self.setPlayer(2) 
+            self.updateSlot(pos[0], pos[1], self.player)
+            self.setPlayer(2)
             self.drawPlayerMark(self.getPlayer())
 
     def placeCircle(self, pos):
@@ -155,13 +163,13 @@ class Board:
 
     def handleWin(self, player):
         color = (255, 0, 0) if player == 1 else (0, 255, 0)
-        for i in range(5): #Blinking line 
+        for i in range(5):  # Blinking line
             self.drawGrid(color)
             pg.time.wait(200)
             self.drawGrid((255, 255, 255))
             pg.time.wait(200)
         pg.draw.rect(window, (0, 0, 0), pg.Rect(0, 0, 600, 600))
-        if player == 1: #Victory message for the cross
+        if player == 1:  # Victory message for the cross
             winText = font.render("Cross Wins !", True, (255, 0, 0))
             window.blit(winText, (40, 80))
             winText = font.render("Press Return", True, (255, 0, 0))
@@ -169,7 +177,7 @@ class Board:
             winText = font.render("to play again", True, (255, 0, 0))
             window.blit(winText, (45, 320))
             pg.display.flip()
-        elif player == 2:#Victory message for the circle
+        elif player == 2:  # Victory message for the circle
             winText = font.render("Circle Wins !", True, (0, 255, 0))
             window.blit(winText, (40, 80))
             winText = font.render("Press Return", True, (0, 255, 0))
@@ -209,15 +217,12 @@ while run:
                         pass
         else:
             if event.type == pg.KEYDOWN:
-                if event.key == pg.K_RETURN: #if the return button is activated then we say that the game is not over and we reset the grid to 0
-                    board.gameEnded = False
+                if (
+                    event.key == pg.K_RETURN
+                ):  # if the return key is pressed then we create a new game board
+                    board = Board()
                     pg.draw.rect(window, (0, 0, 0), pg.Rect(0, 0, 600, 600))
                     board.drawGrid((255, 255, 255))
-                    board.slots = [
-                        [0, 0, 0],
-                        [0, 0, 0],
-                        [0, 0, 0],
-                    ]
                     board.drawPlayerMark(board.getPlayer())
 
     for event in event_list:
