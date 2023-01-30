@@ -93,7 +93,7 @@ class Board:
             if min(self.diag1) == max(self.diag1):
                 pg.draw.line(window, (255, 255, 255), (30, 30), (570, 570), 12)
                 return True
-        elif (pos[0], pos[1]) in [(2, 0), (1, 1), (0, 2)]:
+        if (pos[0], pos[1]) in [(2, 0), (1, 1), (0, 2)]:
             if min(self.diag2) == max(self.diag2):
                 pg.draw.line(window, (255, 255, 255), (30, 570), (570, 30), 12)
                 return True
